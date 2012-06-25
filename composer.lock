@@ -1,5 +1,5 @@
 {
-    "hash": "60f09c83d9f0891b51ac51941970dcd5",
+    "hash": "4790654a5af4e2763934922a04c46a70",
     "packages": [
         {
             "package": "doctrine/common",
@@ -19,6 +19,11 @@
             "package": "doctrine/orm",
             "version": "2.2.x-dev",
             "source-reference": "5f66c65c9a8d984899903b54215d0249a45b92d6"
+        },
+        {
+            "package": "guzzle/guzzle",
+            "version": "dev-master",
+            "source-reference": "688631a8c3977e5ed13ce5741492dd8fd7602203"
         },
         {
             "package": "jms/aop-bundle",
@@ -63,12 +68,6 @@
         {
             "package": "sensio/framework-extra-bundle",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "sensio/framework-extra-bundle",
-            "version": "dev-master",
             "source-reference": "d6087182597e9831ecee510c2a64880fad883c22"
         },
         {
@@ -85,7 +84,13 @@
         {
             "package": "swiftmailer/swiftmailer",
             "version": "dev-master",
-            "source-reference": "42223cb8ca2009dc6361bf4569ca52ec0fae51c2"
+            "alias-pretty-version": "4.1.x-dev",
+            "alias-version": "4.1.9999999.9999999-dev"
+        },
+        {
+            "package": "swiftmailer/swiftmailer",
+            "version": "dev-master",
+            "source-reference": "0509c682d482940949ea7f7128c582d9d8b628e2"
         },
         {
             "package": "symfony/assetic-bundle",
@@ -116,7 +121,13 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "bc147d34926f0e5c367d225a04b31b40a579eeba"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/symfony",
+            "version": "dev-master",
+            "source-reference": "086ff48228e93c7c01b5582fa988d04c28081fa0"
         },
         {
             "package": "twig/extensions",
@@ -132,12 +143,16 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "120c44d68f07ced5b1e08f582f94016f4f2685d6"
+            "alias-pretty-version": "1.8.x-dev",
+            "alias-version": "1.8.9999999.9999999-dev"
+        },
+        {
+            "package": "twig/twig",
+            "version": "dev-master",
+            "source-reference": "4679ad51c5390648b7ea4c8f0ecd2c0c344145ba"
         }
     ],
-    "packages-dev": [
-
-    ],
+    "packages-dev": null,
     "aliases": [
 
     ],

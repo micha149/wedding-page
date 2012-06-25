@@ -1,0 +1,14 @@
+{% extends "AcmeDemoBundle:Secured:layout.html.twig" %}
+
+{% block content %}
+	<h1>Das ist ein Test</h1>
+	
+	{% if files %}
+		<ul>
+			{% for file in files %}
+				<li><a href="{{baseUrl}}{{file.original}}">{{file.filename}}</a></li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+	
+{% endblock %}
