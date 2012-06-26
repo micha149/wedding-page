@@ -18,27 +18,27 @@ class FileManager
     
     protected $_logger;
     
-	public function __construct(HttpClient $client, $bucket, LoggerInterface $logger = null)
-	{
-		$this->_httpClient = $client;
-		$this->_bucketName = $bucket;
-		
-		if ($logger) {
-    		$this->_logger = $logger;				
-    	}
-	}
-	
-	public function getImagesByEvent ($event) {
-	    return $this->_loadData();
-	}
-	
-	public function getBaseUrl()
-	{
-	    return 'http://' . $this->_bucketName . '.s3-external-3.amazonaws.com/';
-	}
-	
-	protected function _loadData()
-	{
+    public function __construct(HttpClient $client, $bucket, LoggerInterface $logger = null)
+    {
+        $this->_httpClient = $client;
+        $this->_bucketName = $bucket;
+        
+        if ($logger) {
+            $this->_logger = $logger;				
+        }
+    }
+    
+    public function getImagesByEvent ($event) {
+        return $this->_loadData();
+    }
+    
+    public function getBaseUrl()
+    {
+        return 'http://' . $this->_bucketName . '.s3-external-3.amazonaws.com/';
+    }
+    
+    protected function _loadData()
+    {
         $this->_httpClient->setBaseUrl($this->getBaseUrl());
         
         $response = $this->_httpClient->get('/')->send();
@@ -47,28 +47,28 @@ class FileManager
         $results = array();
         
         foreach ($xml->Contents as $content) {
-        	$matches = array();
-        	$match   = preg_match("#(.+)\/(.+)\/(.+)#", $content->Key, $matches);
-        	
-        	if ($match) {
-        		$results[] = array(
-        			'original' => (string) $content->Key,
-        			'filename' => $matches[3],
-        			'event'    => $matches[1],
-        			'author'   => $matches[2],
-        		);
-        	}
+            $matches = array();
+            $match   = preg_match("#(.+)\/(.+)\/(.+)#", $content->Key, $matches);
+            
+            if ($match) {
+                $results[] = array(
+                    'original' => (string) $content->Key,
+                    'filename' => $matches[3],
+                    'event'    => $matches[1],
+                    'author'   => $matches[2],
+                );
+            }
         }
-    	
-    	$this->_log('info', 'Loaded data from ' . $this->getBaseUrl());
-    	
-    	return $results;
-	}
-	
-	protected function _log($level, $message)
-	{
-	    if ($this->_logger) {
+        
+        $this->_log('info', 'Loaded data from ' . $this->getBaseUrl());
+        
+        return $results;
+    }
+    
+    protected function _log($level, $message)
+    {
+        if ($this->_logger) {
             $this->_logger->{$level}($message);
-	    }
-	}
+        }
+    }
 }

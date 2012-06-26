@@ -17,10 +17,10 @@ class GalleryController extends Controller
     public function indexAction()
     {
         $manager = $this->get('file_manager');
-        		
-		return array(
-			'baseUrl' => $manager->getBaseUrl(),
-			'files'   => $manager->getImagesByEvent('standesamt'),
-		); 
+                
+        return array(
+            'baseUrl' => $manager->getBaseUrl(),
+            'files'   => $manager->getImagesByEvent('standesamt'),
+        ); 
     }
 }

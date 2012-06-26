@@ -1,9 +1,10 @@
 {% extends "AcmeDemoBundle:Secured:layout.html.twig" %}
 
 {% block content %}
-	<h1>Das ist ein Test</h1>
-	
-	{% if files %}
+
+    <h1>Das ist ein Test</h1>
+    
+    {% if files %}
         <ul class="thumbnails">
             <li class="span6">
                 <a href="#" class="thumbnail">
@@ -12,12 +13,12 @@
             </li>        
             {% for file in files %}
                 <li class="span3">
-            	    <a href="{{baseUrl}}{{file.original}}" class="thumbnail">
+                    <a href="{{baseUrl}}{{file.original}}" class="thumbnail">
                         <img src="http://placehold.it/260x180" alt="{{file.filename}}">
-            	    </a>
-            	</li>
+                    </a>
+                </li>
             {% endfor %}    
         </ul>
     {% endif %}
-	
+    
 {% endblock %}
