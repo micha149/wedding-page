@@ -1,0 +1,7 @@
+body {
+    background:  url('../img/bg-tile.jpg');
+}
+
+.thumbnails a {
+    background: #fff;
+}
