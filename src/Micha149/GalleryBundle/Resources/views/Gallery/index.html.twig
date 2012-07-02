@@ -1,4 +1,4 @@
-{% extends "AcmeDemoBundle:Secured:layout.html.twig" %}
+{% extends "GalleryBundle::layout.html.twig" %}
 
 {% block content %}
 
@@ -14,7 +14,7 @@
             {% for file in files %}
                 <li class="span3">
                     <a href="{{baseUrl}}{{file.original}}" class="thumbnail">
-                        <img src="http://placehold.it/260x180" alt="{{file.filename}}">
+                        <img src="{{baseUrl}}{{file.thumbnail}}" alt="{{file.filename}}">
                     </a>
                 </li>
             {% endfor %}    
