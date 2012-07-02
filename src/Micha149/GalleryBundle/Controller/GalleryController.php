@@ -13,6 +13,7 @@ class GalleryController extends Controller
     /**
      * @Route("/gallery")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
     {

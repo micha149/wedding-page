@@ -5,4 +5,8 @@
 
 _gallery:
     resource: "@GalleryBundle/Controller/GalleryController.php"
-    type:     annotation    
+    type:     annotation
+    
+_auth:
+    resource: "@GalleryBundle/Controller/AuthController.php"
+    type:     annotation  
