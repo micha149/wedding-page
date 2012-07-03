@@ -5,12 +5,7 @@
     <h1>Das ist ein Test</h1>
     
     {% if files %}
-        <ul class="thumbnails">
-            <li class="span6">
-                <a href="#" class="thumbnail">
-                    <img src="http://placehold.it/580x402" alt="">
-                </a>
-            </li>        
+        <ul class="thumbnails">     
             {% for file in files %}
                 <li class="span3">
                     <a href="{{baseUrl}}{{file.original}}" class="thumbnail">
