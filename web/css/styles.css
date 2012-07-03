@@ -1,7 +1,12 @@
-body {
-    background:  url('../img/bg-tile.jpg');
+body { 
+	background: url(../img/bg-login.jpg) no-repeat right center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 .thumbnails a {
     background: #fff;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
 }
