@@ -48,15 +48,18 @@ class FileManager
         
         foreach ($xml->Contents as $content) {
             $matches = array();
-            $match   = preg_match("#(.+)\/(.+)\/(.+)#", $content->Key, $matches);
+            $match   = preg_match("#(.+)\/(.+)\/(.+_o.+)#", $content->Key, $matches);
             
             if ($match) {
+            
                 $results[] = array(
-                    'original' => (string) $content->Key,
-                    'filename' => $matches[3],
-                    'event'    => $matches[1],
-                    'author'   => $matches[2],
-                );
+                    'original'  => (string) $content->Key,
+                    'thumbnail' => str_replace('_o', '_s', $content->Key),
+                    'lightbox'  => str_replace('_o', '_l', $content->Key),
+                    'filename'  => $matches[3],
+                    'event'     => $matches[1],
+                    'author'    => $matches[2],
+                );                
             }
         }
         
