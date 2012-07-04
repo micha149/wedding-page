@@ -9,7 +9,6 @@ framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
     secret:          %secret%
-    charset:         UTF-8
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_parameters: %kernel.debug%
@@ -19,7 +18,7 @@ framework:
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale:  %locale%
     session:
-        auto_start:     true
+
 
 # Twig Configuration
 twig:
@@ -48,7 +47,6 @@ doctrine:
         dbname:   %database_name%
         user:     %database_user%
         password: %database_password%
-        charset:  UTF8
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
