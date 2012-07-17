@@ -18,6 +18,11 @@
         
         <service id="http_client" class="Guzzle\Service\Client" />
         
+        <service id="data_collector.gallery" class="Micha149\GalleryBundle\DataCollector\GalleryDataCollector">
+            <argument type="service" id="file_manager"/>
+            <tag name="data_collector" template="GalleryBundle:Collector:gallery" id="gallery" />
+        </service>        
+        
     </services>
     
 </container>

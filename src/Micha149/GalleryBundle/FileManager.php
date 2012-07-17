@@ -37,6 +37,11 @@ class FileManager
         return 'http://' . $this->_bucketName . '.s3-external-3.amazonaws.com/';
     }
     
+    public function getCount($event = null)
+    {
+        return count($this->_loadData());
+    }
+    
     protected function _loadData()
     {
         $this->_httpClient->setBaseUrl($this->getBaseUrl());
