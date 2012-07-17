@@ -22,27 +22,29 @@
 </head>
 <body>
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-  
-    <nav class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="brand" href="./index.html">Bootstrap</a>
-                <div class="nav-collapse collapse">
-                    <ul class="nav">
-                        <li>
-                            <p class="navbar-text">Ereignis:</p>
-                        </li>
-                        <li class="active">
-                            <a href="./index.html">Standesamt</a>
-                        </li>
-                        <li>
-                            <a href="./index.html">Polterabend</a>
-                        </li>                        
-                    </ul>
+    {% block navbar %}
+        <nav class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="./index.html">Bootstrap</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li>
+                                <p class="navbar-text">Ereignis:</p>
+                            </li>
+                            <li class="active">
+                                <a href="./index.html">Standesamt</a>
+                            </li>
+                            <li>
+                                <a href="./index.html">Polterabend</a>
+                            </li>                        
+                        </ul>
+                        <a class="btn btn-danger pull-right" href="{{ path('_logout') }}">Logout</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>  
+        </nav>
+    {% endblock %}
   
   <div class="container">
           
