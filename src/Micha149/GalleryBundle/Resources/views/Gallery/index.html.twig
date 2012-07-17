@@ -8,12 +8,24 @@
         <ul class="thumbnails">     
             {% for file in files %}
                 <li class="span3">
-                    <a href="{{baseUrl}}{{file.original}}" class="thumbnail">
+                    <a href="{{baseUrl}}{{file.lightbox}}" class="thumbnail" data-fancybox-group="gallery">
                         <img src="{{baseUrl}}{{file.thumbnail}}" alt="{{file.filename}}">
                     </a>
                 </li>
             {% endfor %}    
         </ul>
     {% endif %}
+    
+    <script>
+        $(function () {
+    		$('.thumbnail').fancybox({
+    			closeBtn  : false,
+                arrows: false,
+    			helpers : {
+    				buttons	: {}
+    			}
+    		});
+		});
+    </script>
     
 {% endblock %}

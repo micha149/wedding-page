@@ -4,21 +4,35 @@
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>{% block title %}Demo Bundle{% endblock %}</title>
-  <meta name="description" content="">
 
-  <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{% block title %}Demo Bundle{% endblock %}</title>
+    <meta name="description" content="">
+
+    <meta name="viewport" content="width=device-width">
+    
+    <link href='http://fonts.googleapis.com/css?family=Italianno' rel='stylesheet' type='text/css'>
+    <script src="js/modernizr-2.5.3.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.7.1.min.js"><\/script>')</script>  
   
-  {% stylesheets output='css/compressed.css'
-                  'css/bootstrap.min.css' 
-                  'css/bootstrap-responsive.min.css'
-                  'css/styles.css' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
-
-  <script src="js/modernizr-2.5.3.min.js"></script>
+    {% stylesheets output='css/compressed.css'
+            'css/bootstrap.min.css' 
+            'css/bootstrap-responsive.min.css'
+            'css/jquery.fancybox.css' 
+            'css/jquery.fancybox-buttons.css'            
+            'css/styles.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+  
+    {% javascripts output='js/scripts.js'
+            'js/bootstrap.js'     
+            'js/jquery.fancybox.js' 
+            'js/jquery.fancybox-buttons.js' %}
+        <script src="{{ asset_url }}"></script>            
+    {% endjavascripts %}  
+  
 </head>
 <body>
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -62,13 +76,6 @@
     </footer>
       
   </div>
-
-
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/jquery-1.7.1.min.js"><\/script>')</script>
-
-  <script src="js/plugins.js"></script>
-  <script src="js/script.js"></script>
 
   <script>
     var _gaq=[['_setAccount','UA-XXXXX-X'],['_gat._anonymizeIp'],['_trackPageview']];
