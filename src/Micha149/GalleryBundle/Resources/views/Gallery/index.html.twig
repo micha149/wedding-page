@@ -11,7 +11,7 @@
                     <div class="row">
                 {% endif %}
                 <div class="span3">
-                    <a href="{{baseUrl}}{{file.lightbox}}" class="thumbnail" data-fancybox-group="gallery">
+                    <a href="{{baseUrl}}{{file.lightbox}}" class="thumbnail" data-fancybox-group="gallery" data-download-url="{{baseUrl}}{{file.original}}">
                         <img src="{{baseUrl}}{{file.thumbnail}}" alt="{{file.filename}}">
                     </a>
                 </div>
