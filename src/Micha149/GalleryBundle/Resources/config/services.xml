@@ -13,7 +13,9 @@
         <service id="file_manager" class="Micha149\GalleryBundle\FileManager">
             <argument type="service" id="http_client"/>
             <argument>%gallery.bucket_name%</argument>
-            <argument type="service" id="logger" on-invalid="ignore" />        	
+            <argument>%gallery.secret_key%</argument>
+            <argument>%gallery.access_key%</argument>                        
+            <argument type="service" id="logger" on-invalid="ignore" />
         </service>
         
         <service id="http_client" class="Guzzle\Service\Client" />

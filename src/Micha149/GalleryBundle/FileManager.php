@@ -18,10 +18,14 @@ class FileManager
     
     protected $_logger;
     
-    public function __construct(HttpClient $client, $bucket, LoggerInterface $logger = null)
+    protected $data;
+    
+    public function __construct(HttpClient $client, $bucket, $secretKey, $accessKey, LoggerInterface $logger = null)
     {
         $this->_httpClient = $client;
         $this->_bucketName = $bucket;
+        $this->secretKey   = $secretKey;        
+        $this->accessKey   = $accessKey;
         
         if ($logger) {
             $this->_logger = $logger;				
@@ -29,7 +33,14 @@ class FileManager
     }
     
     public function getImagesByEvent ($event) {
-        return $this->_loadData();
+        $data = $this->_loadData();
+        
+        return $data[$event];
+    }
+    
+    public function getEvents() {
+        $data = $this->_loadData();    
+        return array_keys($data);
     }
     
     public function getBaseUrl()
@@ -42,35 +53,64 @@ class FileManager
         return count($this->_loadData());
     }
     
+    protected function getSignedUrl($url, $download = false) {
+        $expires      = 1345845527; //time() + 86400;
+        $url = ltrim($url, '/');
+        $stringToSign = sprintf("GET\n\n\n%s\n/%s/%s", $expires, $this->_bucketName, $url);
+        
+        if ($download) {
+            $stringToSign .= '?response-content-disposition=attachment';
+        }
+
+        $signature = urlencode(base64_encode(hash_hmac('sha1', utf8_encode($stringToSign), $this->secretKey, true)));
+        
+        return sprintf(
+            "%s?AWSAccessKeyId=%s&Signature=%s&Expires=%d%s",
+            $url,
+            $this->accessKey,
+            $signature,
+            $expires,
+            $download ? '&response-content-disposition=attachment' : ''
+        );
+    }
+        
     protected function _loadData()
     {
-        $this->_httpClient->setBaseUrl($this->getBaseUrl());
-        
-        $response = $this->_httpClient->get('/')->send();
-        
-        $xml = new \SimpleXMLElement((string) $response->getBody());
-        $results = array();
-        
-        foreach ($xml->Contents as $content) {
-            $matches = array();
-            $match   = preg_match("#(.+)\/(.+)\/(.+_o.+)#", $content->Key, $matches);
+        if (!$this->data) {
+            $this->_httpClient->setBaseUrl($this->getBaseUrl());
             
-            if ($match) {
+            $response = $this->_httpClient->get($this->getSignedUrl('/'))->send();
             
-                $results[] = array(
-                    'original'  => (string) $content->Key,
-                    'thumbnail' => str_replace('.JPG', '.jpg', (str_replace('_o', '_s', $content->Key))),
-                    'lightbox'  => str_replace('.JPG', '.jpg', (str_replace('_o', '_l', $content->Key))),
-                    'filename'  => $matches[3],
-                    'event'     => $matches[1],
-                    'author'    => $matches[2],
-                );                
+            $xml = new \SimpleXMLElement((string) $response->getBody());
+            $results = array();
+            
+            foreach ($xml->Contents as $content) {
+                $matches = array();
+                $match   = preg_match("#(.+)\/(.+)\/(.+_o.+)#", $content->Key, $matches);
+                
+                if ($match) {
+                
+                    if (!isset($results[$matches[1]])) {
+                        $results[$matches[1]] = array();
+                    }
+
+                    $results[$matches[1]][] = array(
+                        'original'  => $this->getSignedUrl((string) $content->Key, true),
+                        'thumbnail' => $this->getSignedUrl(str_replace('.JPG', '.jpg', (str_replace('_o', '_s', $content->Key)))),
+                        'lightbox'  => $this->getSignedUrl(str_replace('.JPG', '.jpg', (str_replace('_o', '_l', $content->Key)))),
+                        'filename'  => $matches[3],
+                        'event'     => $matches[1],
+                        'author'    => $matches[2],
+                    );                
+                }
             }
-        }
+            
+            $this->_log('info', 'Loaded data from ' . $this->getBaseUrl());
+            
+            $this->data = $results;
+        }        
         
-        $this->_log('info', 'Loaded data from ' . $this->getBaseUrl());
-        
-        return $results;
+        return $this->data;
     }
     
     protected function _log($level, $message)
