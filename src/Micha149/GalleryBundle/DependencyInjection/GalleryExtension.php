@@ -18,6 +18,8 @@ class GalleryExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('gallery.bucket_name', $config['bucket_name']);
+        $container->setParameter('gallery.secret_key', $config['secret_key']);        
+        $container->setParameter('gallery.access_key', $config['access_key']);        
     }
 
     public function getAlias()

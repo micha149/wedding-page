@@ -24,8 +24,8 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('bucket_name')->isRequired()->end()
-                ->booleanNode('test')->end()
-                ->scalarNode('default_locale')->defaultValue('en')->end()
+                ->scalarNode('secret_key')->isRequired()->end()
+                ->scalarNode('access_key')->isRequired()->end()
             ->end()
         ;
 
