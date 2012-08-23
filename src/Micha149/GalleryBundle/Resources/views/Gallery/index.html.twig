@@ -5,15 +5,21 @@
     <h1>Das ist ein Test</h1>
     
     {% if files %}
-        <ul class="thumbnails">     
+        <div class="thumbnails">     
             {% for file in files %}
-                <li class="span3">
+                {% if loop.index%4 == 0%}
+                    <div class="row">
+                {% endif %}
+                <div class="span3">
                     <a href="{{baseUrl}}{{file.lightbox}}" class="thumbnail" data-fancybox-group="gallery">
                         <img src="{{baseUrl}}{{file.thumbnail}}" alt="{{file.filename}}">
                     </a>
-                </li>
+                </div>
+                {% if loop.index%4 == 0%}
+                    </div>
+                {% endif %}                
             {% endfor %}    
-        </ul>
+        </div>
     {% endif %}
     
     <script>

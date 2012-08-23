@@ -1,5 +1,5 @@
 body { 
-	background: url(../img/bg-login.jpg) no-repeat right center fixed; 
+	background: url(/img/bg-login.jpg) no-repeat right center fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -42,4 +42,8 @@ body {
     left: 20px;
     top: -36px;
     text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000;
+}
+
+.thumbnails .row {
+    margin-bottom: 20px;
 }
