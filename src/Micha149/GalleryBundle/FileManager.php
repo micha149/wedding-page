@@ -59,8 +59,8 @@ class FileManager
             
                 $results[] = array(
                     'original'  => (string) $content->Key,
-                    'thumbnail' => str_replace('_o', '_s', $content->Key),
-                    'lightbox'  => str_replace('_o', '_l', $content->Key),
+                    'thumbnail' => str_replace('.JPG', '.jpg', (str_replace('_o', '_s', $content->Key))),
+                    'lightbox'  => str_replace('.JPG', '.jpg', (str_replace('_o', '_l', $content->Key))),
                     'filename'  => $matches[3],
                     'event'     => $matches[1],
                     'author'    => $matches[2],
