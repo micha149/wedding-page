@@ -1,5 +1,18 @@
 {% extends "GalleryBundle::layout.html.twig" %}
 
+{% block navigation %}
+    <ul class="nav">
+        <li>
+            <p class="navbar-text">Ereignis:</p>
+        </li>
+        {% for event in events %}
+            <li {% if currentEvent == event %}class="active"{% endif %}>
+                <a href="{{ path('micha149_gallery_gallery_index', {'event': event}) }}">{{ event }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
 {% block content %}
 
     <h1>Das ist ein Test</h1>

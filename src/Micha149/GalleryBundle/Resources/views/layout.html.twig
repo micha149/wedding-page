@@ -40,19 +40,10 @@
         <nav class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="./index.html">Bootstrap</a>
+                    <a class="brand" href="./index.html">Stephan's &amp; Norbert's Hochzeit</a>
                     <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li>
-                                <p class="navbar-text">Ereignis:</p>
-                            </li>
-                            <li class="active">
-                                <a href="./index.html">Standesamt</a>
-                            </li>
-                            <li>
-                                <a href="./index.html">Polterabend</a>
-                            </li>                        
-                        </ul>
+                        {% block navigation %}
+                        {% endblock %}
                         <a class="btn btn-danger pull-right" href="{{ path('_logout') }}">Logout</a>
                     </div>
                 </div>
