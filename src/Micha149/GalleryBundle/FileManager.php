@@ -54,7 +54,7 @@ class FileManager
     }
     
     protected function getSignedUrl($url, $download = false) {
-        $expires      = 1345845527; //time() + 86400;
+        $expires      = time() + 86400;
         $url = ltrim($url, '/');
         $stringToSign = sprintf("GET\n\n\n%s\n/%s/%s", $expires, $this->_bucketName, $url);
         
