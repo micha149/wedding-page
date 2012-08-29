@@ -23,7 +23,7 @@
                 {% endif %}
                 <div class="span3">
                     <a href="{{baseUrl}}{{file.lightbox}}" class="thumbnail" data-fancybox-group="gallery" data-download-url="{{baseUrl}}{{file.original}}">
-                        <img src="{{baseUrl}}{{file.thumbnail}}" alt="{{file.filename}}">
+                        <img src="/img/placeholder.gif" width="270" height="173" data-original="{{baseUrl}}{{file.thumbnail}}" alt="{{file.filename}}">
                     </a>
                 </div>
                 {% if loop.index%4 == 0%}
@@ -35,7 +35,12 @@
     
     <script>
         $(function () {
-    		$('.thumbnail').fancybox({
+            var thumbs = $('.thumbnail');
+            
+            $('img', thumbs).lazyload();
+            
+            
+    		thumbs.fancybox({
     			closeBtn  : false,
                 arrows: false,
     			helpers : {
