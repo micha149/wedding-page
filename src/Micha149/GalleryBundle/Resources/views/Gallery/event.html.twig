@@ -3,9 +3,6 @@
 
 {% block navigation %}
     <ul class="nav">
-        <li>
-            <p class="navbar-text">Ereignis:</p>
-        </li>
         {% for event in events %}
             <li {% if currentEvent == event %}class="active"{% endif %}>
                 <a href="{{ path('micha149_gallery_gallery_event', {'event': event}) }}">{{ event }}</a>
