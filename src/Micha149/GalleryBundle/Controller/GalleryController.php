@@ -28,8 +28,9 @@ class GalleryController extends Controller
     public function eventAction($event)
     {
         $manager = $this->get('file_manager');
-                
+
         return array(
+            'galleryTitle' => $this->container->getParameter('gallery_title'),
             'baseUrl' => $manager->getBaseUrl(),
             'files'   => $manager->getImagesByEvent($event),
             'events'  => $manager->getEvents(),
