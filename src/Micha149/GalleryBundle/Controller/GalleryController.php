@@ -10,12 +10,22 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 
 class GalleryController extends Controller
 {
+
     /**
-     * @Route("/gallery/{event}")
+     * @Route("/")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function indexAction($event)
+    public function indexAction() {
+    
+    }
+    
+    /**
+     * @Route("/{event}")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function eventAction($event)
     {
         $manager = $this->get('file_manager');
                 

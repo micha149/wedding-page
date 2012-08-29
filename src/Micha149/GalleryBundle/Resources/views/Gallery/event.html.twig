@@ -1,3 +1,4 @@
+
 {% extends "GalleryBundle::layout.html.twig" %}
 
 {% block navigation %}
@@ -7,7 +8,7 @@
         </li>
         {% for event in events %}
             <li {% if currentEvent == event %}class="active"{% endif %}>
-                <a href="{{ path('micha149_gallery_gallery_index', {'event': event}) }}">{{ event }}</a>
+                <a href="{{ path('micha149_gallery_gallery_event', {'event': event}) }}">{{ event }}</a>
             </li>
         {% endfor %}
     </ul>
