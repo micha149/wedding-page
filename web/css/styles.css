@@ -6,6 +6,14 @@ body {
 	background-size: cover;
 }
 
+header {
+    margin-top: 80px;
+}
+
+footer {
+    margin-bottom: 80px;
+}
+
 .thumbnails a {
     background: #fff;
     box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
