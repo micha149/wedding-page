@@ -18,7 +18,8 @@
         "sensio/generator-bundle": "2.1.*",
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
-        "guzzle/guzzle": ">=2.6.6"
+        "cybernox/amazon-webservices-bundle": ">=1.5.4",
+        "raulfraile/ladybug-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

@@ -3,7 +3,14 @@ imports:
     - { resource: security.yml }
 
 gallery:
-    bucket_name: "wedding.ve"
+    bucket_name: %gallery_bucket_name%
+    
+cybernox_amazon_web_services:
+    key:                        %aws_access_key%
+    secret:                     %aws_secret_key%
+    default_cache_config:       apc
+    enable_extensions:          false
+    certificate_authority:      false
 
 framework:
     #esi:             ~
