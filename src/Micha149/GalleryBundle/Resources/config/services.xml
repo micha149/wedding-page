@@ -7,14 +7,12 @@
     <services>
     
         <service id="file_manager" class="Micha149\GalleryBundle\FileManager">
-            <argument type="service" id="http_client"/>
-            <argument>%gallery.bucket_name%</argument>
-            <argument>%gallery.secret_key%</argument>
-            <argument>%gallery.access_key%</argument>                        
-            <argument type="service" id="logger" on-invalid="ignore" />
+            <argument type="service" id="aws_s3"/>
+            <argument>%gallery.bucket_name%</argument>      
+            <call method="setLogger">
+                <argument type="service" id="logger" />
+            </call>            
         </service>
-        
-        <service id="http_client" class="Guzzle\Service\Client" />
         
         <service id="data_collector.gallery" class="Micha149\GalleryBundle\DataCollector\GalleryDataCollector">
             <argument type="service" id="file_manager"/>

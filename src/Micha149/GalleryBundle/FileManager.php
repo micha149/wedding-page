@@ -2,8 +2,7 @@
 
 namespace Micha149\GalleryBundle;
 
-use Guzzle\Service\Client as HttpClient,
-    Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class FileManager
 {
@@ -20,16 +19,15 @@ class FileManager
     
     protected $data;
     
-    public function __construct(HttpClient $client, $bucket, $secretKey, $accessKey, LoggerInterface $logger = null)
+    public function __construct(\AmazonS3 $s3, $bucket)
     {
-        $this->_httpClient = $client;
-        $this->_bucketName = $bucket;
-        $this->secretKey   = $secretKey;        
-        $this->accessKey   = $accessKey;
-        
-        if ($logger) {
-            $this->_logger = $logger;				
-        }
+        $this->_s3 = $s3;
+        $this->_bucket = $bucket;
+    }
+    
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->_logger = $logger;
     }
     
     public function getImagesByEvent ($event) {
@@ -45,7 +43,7 @@ class FileManager
     
     public function getBaseUrl()
     {
-        return 'http://' . $this->_bucketName . '.s3-external-3.amazonaws.com/';
+        return 'http://' . $this->_bucket . '.s3-external-3.amazonaws.com/';
     }
     
     public function getCount($event = null)
@@ -53,56 +51,44 @@ class FileManager
         return count($this->_loadData());
     }
     
-    protected function getSignedUrl($url, $download = false) {
-        $expires      = time() + 86400;
-        $url = ltrim($url, '/');
-        $stringToSign = sprintf("GET\n\n\n%s\n/%s/%s", $expires, $this->_bucketName, $url);
+    protected function getSignedUrl($url, $download = false)
+    {
+        $expires  = "3 hours";
+        $response = array();
         
         if ($download) {
-            $stringToSign .= '?response-content-disposition=attachment';
+            $response['content-disposition'] = 'attachment';
         }
-
-        $signature = urlencode(base64_encode(hash_hmac('sha1', utf8_encode($stringToSign), $this->secretKey, true)));
         
-        return sprintf(
-            "%s?AWSAccessKeyId=%s&Signature=%s&Expires=%d%s",
-            $url,
-            $this->accessKey,
-            $signature,
-            $expires,
-            $download ? '&response-content-disposition=attachment' : ''
-        );
+        return $this->_s3->get_object_url($this->_bucket, $url, $expires, array('response' => $response));
     }
         
     protected function _loadData()
     {
         if (!$this->data) {
-            $this->_httpClient->setBaseUrl($this->getBaseUrl());
+                    
+            $objects = $this->_s3->get_object_list($this->_bucket, array(
+                'pcre' => '/(.+)\/(.+)\/(.+_o.+)/i'
+            ));
             
-            $response = $this->_httpClient->get($this->getSignedUrl('/'))->send();
-            
-            $xml = new \SimpleXMLElement((string) $response->getBody());
             $results = array();
             
-            foreach ($xml->Contents as $content) {
-                $matches = array();
-                $match   = preg_match("#(.+)\/(.+)\/(.+_o.+)#", $content->Key, $matches);
-                
-                if ($match) {
-                
-                    if (!isset($results[$matches[1]])) {
-                        $results[$matches[1]] = array();
-                    }
+            foreach ($objects as $object) {
 
-                    $results[$matches[1]][] = array(
-                        'original'  => $this->getSignedUrl((string) $content->Key, true),
-                        'thumbnail' => $this->getSignedUrl(str_replace('.JPG', '.jpg', (str_replace('_o', '_s', $content->Key)))),
-                        'lightbox'  => $this->getSignedUrl(str_replace('.JPG', '.jpg', (str_replace('_o', '_l', $content->Key)))),
-                        'filename'  => $matches[3],
-                        'event'     => $matches[1],
-                        'author'    => $matches[2],
-                    );                
+                list($event, $author, $filename) = explode('/', $object);
+                
+                if (!isset($results[$event])) {
+                    $results[$event] = array();
                 }
+
+                $results[$event][] = array(
+                    'original'  => $this->getSignedUrl((string) $object, true),
+                    'thumbnail' => $this->getSignedUrl(str_replace('_o', '_s', $object)),
+                    'lightbox'  => $this->getSignedUrl(str_replace('_o', '_l', $object)),
+                    'filename'  => $filename,
+                    'event'     => $event,
+                    'author'    => $author,
+                );                
             }
             
             $this->_log('info', 'Loaded data from ' . $this->getBaseUrl());

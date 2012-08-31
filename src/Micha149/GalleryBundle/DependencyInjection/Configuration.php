@@ -24,8 +24,6 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('bucket_name')->isRequired()->end()
-                ->scalarNode('secret_key')->isRequired()->end()
-                ->scalarNode('access_key')->isRequired()->end()
             ->end()
         ;
 
