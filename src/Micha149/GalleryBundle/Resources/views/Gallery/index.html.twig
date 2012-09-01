@@ -1,0 +1,15 @@
+
+{% extends "GalleryBundle::layout.html.twig" %}
+
+{% block content %}
+
+    <h1>Foobar</h1>
+    
+    {% for event in events %}
+        <h2>{{ event.event }}</h2>
+        {% for image in event.images %}        
+            <p>{{ image.filename }}</p>
+        {% endfor %}
+    {% endfor %}
+    
+{% endblock %}
