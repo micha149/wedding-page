@@ -21,22 +21,36 @@
 
 	//Add helper object
 	F.helpers.buttons = {
-		tpl: '<div id="fancybox-buttons"><ul><li><a class="btnPrev" title="Previous" href="javascript:;"></a></li><li><a class="btnPlay" title="Start slideshow" href="javascript:;"></a></li><li><a class="btnNext" title="Next" href="javascript:;"></a></li><li><a class="btnToggle" title="Toggle size" href="javascript:;"></a></li><li><a class="btnDownload" title="Download" href="#"></a></li><li><a class="btnClose" title="Close" href="javascript:jQuery.fancybox.close();"></a></li></ul></div>',
+		tpl: ['<div id="fancybox-buttons"><div class="btn-group">',
+		          '<a href="#" class="btn btnPrev"><i class="icon-chevron-left"></i></a>',
+    		      '<a href="#" class="btn btnPlay"><i class="icon-play"></i></a>',
+		          '<a href="#" class="btn btnNext"><i class="icon-chevron-right"></i></a>',
+		          '<a href="#" class="btn btnToggle"><i class="icon-resize-full"></i></a>',		          
+		          '<a href="#" class="btn btnDownload"><i class="icon-download"></i></a>',
+		          '<a href="javascript:jQuery.fancybox.close();" class="btn"><i class="icon-remove"></i></a>',
+		          '</div></div>'].join(""),
 		list: null,
 		buttons: {},
 
 		update: function () {
-			var toggle = this.buttons.toggle.removeClass('btnDisabled btnToggleOn');
+			var toggle = this.buttons.toggle;
             var downloadUrl = $(F.current.element).data('download-url');
 
+            toggle.removeClass('disabled')
+                .children('i')
+                .removeClass('icon-resize-small')
+                .addClass('icon-resize-full');
+                
             this.buttons.download.attr('href', downloadUrl);
 
 			//Size toggle button
 			if (F.current.canShrink) {
-				toggle.addClass('btnToggleOn');
+				toggle.children('i')
+                      .removeClass('icon-resize-full')
+                      .addClass('icon-resize-small');
 
 			} else if (!F.current.canExpand) {
-				toggle.addClass('btnDisabled');
+				toggle.addClass('disabled');
 			}
 		},
 
@@ -55,13 +69,19 @@
 
 		onPlayStart: function () {
 			if (this.list) {
-				this.buttons.play.attr('title', 'Pause slideshow').addClass('btnPlayOn');
+				this.buttons.play.attr('title', 'Pause slideshow')
+				    .children('i')
+				    .addClass('icon-pause')
+				    .removeClass('icon-play');
 			}
 		},
 
 		onPlayEnd: function () {
 			if (this.list) {
-				this.buttons.play.attr('title', 'Start slideshow').removeClass('btnPlayOn');
+				this.buttons.play.attr('title', 'Start slideshow')
+				.children('i')
+				.removeClass('icon-pause')
+				.addClass('icon-play');
 			}
 		},
 
@@ -84,19 +104,19 @@
 
 			//Prev
 			if (F.current.index > 0 || F.current.loop) {
-				buttons.prev.removeClass('btnDisabled');
+				buttons.prev.removeClass('disabled');
 			} else {
-				buttons.prev.addClass('btnDisabled');
+				buttons.prev.addClass('disabled');
 			}
 
 			//Next / Play
 			if (F.current.loop || F.current.index < F.group.length - 1) {
-				buttons.next.removeClass('btnDisabled');
-				buttons.play.removeClass('btnDisabled');
+				buttons.next.removeClass('disabled');
+				buttons.play.removeClass('disabled');
 
 			} else {
-				buttons.next.addClass('btnDisabled');
-				buttons.play.addClass('btnDisabled');
+				buttons.next.addClass('disabled');
+				buttons.play.addClass('disabled');
 			}
 
 			this.update();
