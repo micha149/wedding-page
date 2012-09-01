@@ -3,13 +3,30 @@
 
 {% block content %}
 
-    <h1>Foobar</h1>
+    <h1>
+        <span class="top">Hochzeit</span>
+        <span class="middle">von</span>
+        <span class="bottom">Carina <span class="amp">&amp;</span> Michael</span>
+    </h1>
     
     {% for event in events %}
-        <h2>{{ event.event }}</h2>
-        {% for image in event.images %}        
-            <p>{{ image.filename }}</p>
-        {% endfor %}
+        {% set link %}
+            {{ path('micha149_gallery_gallery_event', {'event': event.event}) }}
+        {% endset %}
+        <h2>
+            <a href="{{ link }}">
+                {{ event.event }}
+            </a>
+        </h2>
+        <div class="images">
+            {% for image in event.images %}        
+                <div class="thumbnail">
+                    <a href="{{ link }}">
+                        <img width="260" height="260" src="{{ image.thumbnail }}" />
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
     {% endfor %}
     
 {% endblock %}
