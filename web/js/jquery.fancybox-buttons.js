@@ -22,11 +22,11 @@
 	//Add helper object
 	F.helpers.buttons = {
 		tpl: ['<div id="fancybox-buttons"><div class="btn-group">',
-		          '<a href="#" class="btn btnPrev"><i class="icon-chevron-left"></i></a>',
-    		      '<a href="#" class="btn btnPlay"><i class="icon-play"></i></a>',
-		          '<a href="#" class="btn btnNext"><i class="icon-chevron-right"></i></a>',
-		          '<a href="#" class="btn btnToggle"><i class="icon-resize-full"></i></a>',		          
-		          '<a href="#" class="btn btnDownload"><i class="icon-download"></i></a>',
+		          '<a href="javascript:;" class="btn btnPrev"><i class="icon-chevron-left"></i></a>',
+    		      '<a href="javascript:;" class="btn btnPlay"><i class="icon-play"></i></a>',
+		          '<a href="javascript:;" class="btn btnNext"><i class="icon-chevron-right"></i></a>',
+		          '<a href="javascript:;" class="btn btnToggle"><i class="icon-resize-full"></i></a>',		          
+		          '<a href="javascript:;" class="btn btnDownload"><i class="icon-download"></i></a>',
 		          '<a href="javascript:jQuery.fancybox.close();" class="btn"><i class="icon-remove"></i></a>',
 		          '</div></div>'].join(""),
 		list: null,
