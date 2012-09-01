@@ -18,6 +18,21 @@ class GalleryController extends Controller
      */
     public function indexAction() {
     
+        $manager     = $this->get('file_manager');
+        $events      = array();
+        
+        foreach ($manager->getEvents() as $event) {
+            $images   = $manager->getImagesByEvent($event);
+            $events[] = array(
+                'event'  => $event,
+                'images' => array_splice($images, 0, 5)
+            );
+        }
+
+        return array(
+            'galleryTitle' => $this->container->getParameter('gallery_title'),
+            'events'  => $events
+        );
     }
     
     /**
