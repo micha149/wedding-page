@@ -55,3 +55,63 @@ footer {
 .thumbnails .row {
     margin-bottom: 20px;
 }
+
+.event-overview .thumbnails {
+    position: relative;
+}
+.event-overview .thumbnail {
+    position: absolute;
+    top: 0;
+    left 0;
+    background: #fff;
+}
+.event-overview .thumbnail a {
+    display: block;
+}
+.event-overview .thumbnail img {
+    max-width: none;
+    display: block;
+}
+.event-overview .thumbnail + .thumbnail {
+    top: 4px;
+    left:  4px;
+}
+.event-overview .thumbnail + .thumbnail + .thumbnail {
+    top: 8px;
+    left:  8px;
+}
+.event-overview .thumbnail + .thumbnail + .thumbnail + .thumbnail {
+    top: 12px;
+    left:  12px;
+}
+.event-overview .thumbnail + .thumbnail + .thumbnail + .thumbnail + .thumbnail {
+    top: 16px;
+    left:  16px;
+}
+
+.event-overview .event:hover .thumbnail {
+    top: 70px;
+    left: -340px;
+    -webkit-transform: rotate(-20deg);
+    z-index: 1000;
+}
+.event-overview .event:hover .thumbnail + .thumbnail {
+    top: 20px;
+    left:  -170px;
+    -webkit-transform: rotate(-10deg);    
+}
+.event-overview .event:hover .thumbnail + .thumbnail + .thumbnail {
+    top: 8px;
+    left:  8px;
+    -webkit-transform: rotate(0deg);    
+}
+.event-overview .event:hover .thumbnail + .thumbnail + .thumbnail + .thumbnail {
+    top: 20px;
+    left:  170px;
+    -webkit-transform: rotate(10deg);    
+}
+.event-overview .event:hover .thumbnail + .thumbnail + .thumbnail + .thumbnail + .thumbnail {
+    top: 70px;
+    left:  340px;
+    -webkit-transform: rotate(20deg);    
+}

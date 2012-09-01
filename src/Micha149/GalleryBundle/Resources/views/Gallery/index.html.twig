@@ -9,24 +9,28 @@
         <span class="bottom">Carina <span class="amp">&amp;</span> Michael</span>
     </h1>
     
-    {% for event in events %}
-        {% set link %}
-            {{ path('micha149_gallery_gallery_event', {'event': event.event}) }}
-        {% endset %}
-        <h2>
-            <a href="{{ link }}">
-                {{ event.event }}
-            </a>
-        </h2>
-        <div class="images">
-            {% for image in event.images %}        
-                <div class="thumbnail">
+    <div class="event-overview row">
+        {% for event in events %}
+            {% set link %}
+                {{ path('micha149_gallery_gallery_event', {'event': event.event}) }}
+            {% endset %}
+            <div class="span4 event">
+                <h2>
                     <a href="{{ link }}">
-                        <img width="260" height="260" src="{{ image.thumbnail }}" />
+                        {{ event.event }}
                     </a>
+                </h2>
+                <div class="thumbnails">
+                    {% for image in event.images %}        
+                        <div class="thumbnail">
+                            <a href="{{ link }}">
+                                <img width="260" height="260" src="{{ image.thumbnail }}" />
+                            </a>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
-    {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
     
 {% endblock %}
