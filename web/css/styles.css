@@ -56,8 +56,16 @@ footer {
     margin-bottom: 20px;
 }
 
+.event-overview .event h2 {
+    text-align: center;
+}
+.event-overview .event h2 a {
+    color: #333;
+}
 .event-overview .thumbnails {
     position: relative;
+    width: 260px;
+    margin: 0 auto;
 }
 .event-overview .thumbnail {
     position: absolute;
