@@ -4,7 +4,8 @@ app/cache/*
 app/logs/*
 app/config/parameters.yml
 build/
-web/css/compressed.css
+web/js/compressed
+web/css/compressed
 web/bundles/
 vendor
 bin
