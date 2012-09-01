@@ -45,7 +45,7 @@ class GalleryController extends Controller
         $manager = $this->get('file_manager');
         $events  = $manager->getEvents();
         
-        if (!isset($events[$event])) {
+        if (!$manager->eventExists($event)) {
             throw $this->createNotFoundException("The event '$event' does not exist");
         }
 

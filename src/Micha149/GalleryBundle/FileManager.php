@@ -41,6 +41,11 @@ class FileManager
         return array_keys($data);
     }
     
+    public function eventExists($event) {
+        $data = $this->_loadData();
+        return isset($data[$event]) || array_key_exists($event, $data);
+    }
+    
     public function getBaseUrl()
     {
         return 'http://' . $this->_bucket . '.s3-external-3.amazonaws.com/';
