@@ -16,6 +16,9 @@
  * 
  */
 (function ($) {
+
+    window._gaq = window._gaq || [];
+    
 	//Shortcut for fancyBox object
 	var F = $.fancybox;
 
@@ -33,15 +36,12 @@
 		buttons: {},
 
 		update: function () {
-			var toggle = this.buttons.toggle;
-            var downloadUrl = $(F.current.element).data('download-url');
+			var toggle      = this.buttons.toggle;
 
             toggle.removeClass('disabled')
                 .children('i')
                 .removeClass('icon-resize-small')
                 .addClass('icon-resize-full');
-                
-            this.buttons.download.attr('href', downloadUrl);
 
 			//Size toggle button
 			if (F.current.canShrink) {
@@ -86,7 +86,12 @@
 		},
 
 		afterShow: function (opts) {
-			var buttons;
+			var buttons,
+    			self        = this,
+    			link        = $(F.current.element),
+    			downloadUrl = link.data('download-url'),
+    			filename    = link.data('filename'),
+    			eventname   = link.data('fancybox-group');
 
 			if (!this.list) {
 				this.list = $(opts.tpl || this.tpl).addClass(opts.position || 'top').appendTo('body');
@@ -98,9 +103,14 @@
 					play : this.list.find('.btnPlay').click( F.play ),
 					toggle : this.list.find('.btnToggle').click( F.toggle )
 				}
+				
+				this.buttons.download.on('click', function() {
+        			_gaq.push(["_trackEvent", eventname, 'Download', filename]);			
+				});
 			}
-
 			buttons = this.buttons;
+						
+            buttons.download.attr('href', downloadUrl);
 
 			//Prev
 			if (F.current.index > 0 || F.current.loop) {
@@ -120,6 +130,7 @@
 			}
 
 			this.update();
+			_gaq.push(["_trackEvent", eventname, 'View', filename]);			
 		},
 
 		onUpdate: function () {

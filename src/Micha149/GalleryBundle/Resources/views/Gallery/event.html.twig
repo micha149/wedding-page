@@ -22,7 +22,7 @@
                     <div class="row">
                 {% endif %}
                 <div class="span3">
-                    <a href="{{file.lightbox}}" class="thumbnail" data-fancybox-group="gallery" data-download-url="{{file.original}}">
+                    <a href="{{file.lightbox}}" class="thumbnail" data-fancybox-group="{{currentEvent}}" data-download-url="{{file.original}}" data-filename="{{file.filename}}">
                         <img src="/img/placeholder.gif" width="260" height="260" data-original="{{file.thumbnail}}" alt="{{file.filename}}">
                     </a>
                 </div>
