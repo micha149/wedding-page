@@ -5,7 +5,6 @@ liip_doctrine_cache:
     namespaces:
         gallery:
             type: memcached
-            id: %memcached.id%
             host: %memcached.host%
             port: %memcached.port%
 
