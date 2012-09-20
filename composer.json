@@ -19,7 +19,9 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "cybernox/amazon-webservices-bundle": ">=1.5.4",
-        "raulfraile/ladybug-bundle": "dev-master"
+        "raulfraile/ladybug-bundle": "dev-master",
+        "liip/doctrine-cache-bundle": "dev-master"
+        
     },
     "scripts": {
         "post-install-cmd": [

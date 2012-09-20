@@ -11,6 +11,12 @@ cybernox_amazon_web_services:
     default_cache_config:       apc
     enable_extensions:          false
     certificate_authority:      false
+    
+liip_doctrine_cache:
+    namespaces:
+        gallery:
+            type: file_system
+            directory: "%kernel.root_dir%/cache/gallery"
 
 framework:
     #esi:             ~

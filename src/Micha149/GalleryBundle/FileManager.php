@@ -8,16 +8,21 @@ class FileManager
 {
 
     /**
-     * Http Client
-     * @var Guzzle\Service\Client
+     * Amazon AWS SDK S3 client
+     *
+     * @var \AmazonS3 $_s3
      */
-    protected $_httpClient;
+    protected $_s3;
+    
+    protected $_cache;
+    
+    protected $_cacheId = 'all';
     
     protected $_bucketName;
     
     protected $_logger;
     
-    protected $data;
+    protected $_data;
     
     public function __construct(\AmazonS3 $s3, $bucket)
     {
@@ -30,19 +35,23 @@ class FileManager
         $this->_logger = $logger;
     }
     
+    public function setCacheDriver($cache) {
+        $this->_cache = $cache;
+    }
+    
     public function getImagesByEvent ($event) {
-        $data = $this->_loadData();
+        $data = $this->_getData();
         
         return $data[$event];
     }
     
     public function getEvents() {
-        $data = $this->_loadData();    
+        $data = $this->_getData();    
         return array_keys($data);
     }
     
     public function eventExists($event) {
-        $data = $this->_loadData();
+        $data = $this->_getData();
         return isset($data[$event]) || array_key_exists($event, $data);
     }
     
@@ -53,7 +62,7 @@ class FileManager
     
     public function getCount($event = null)
     {
-        return count($this->_loadData());
+        return count($this->_getData());
     }
     
     protected function getSignedUrl($url, $download = false)
@@ -68,40 +77,66 @@ class FileManager
         return $this->_s3->get_object_url($this->_bucket, $url, $expires, array('response' => $response));
     }
         
-    protected function _loadData()
+    protected function _getData()
     {
-        if (!$this->data) {
-                    
-            $objects = $this->_s3->get_object_list($this->_bucket, array(
-                'pcre' => '/(.+)\/(.+)\/(.+_o.+)/i'
-            ));
-            
-            $results = array();
-            
-            foreach ($objects as $object) {
-
-                list($event, $author, $filename) = explode('/', $object);
-                
-                if (!isset($results[$event])) {
-                    $results[$event] = array();
-                }
-
-                $results[$event][] = array(
-                    'original'  => $this->getSignedUrl((string) $object, true),
-                    'thumbnail' => $this->getSignedUrl(str_replace('_o', '_s', $object)),
-                    'lightbox'  => $this->getSignedUrl(str_replace('_o', '_l', $object)),
-                    'filename'  => $filename,
-                    'event'     => $event,
-                    'author'    => $author,
-                );                
-            }
-            
-            $this->_log('info', 'Loaded data from ' . $this->getBaseUrl());
-            
-            $this->data = $results;
-        }        
+        if ($this->_data) {
+            return $this->_data;
+        }
         
-        return $this->data;
+        if (!$data = $this->_loadFromCache()) {
+            $data = $this->_loadData();            
+            $this->_saveToCache($data);
+        }
+
+        $this->_data = $data;
+        
+        return $this->_data;
+    }
+    
+    protected function _loadData()
+    {               
+        $objects = $this->_s3->get_object_list($this->_bucket, array(
+            'pcre' => '/(.+)\/(.+)\/(.+_o.+)/i'
+        ));
+        
+        $results = array();
+        
+        foreach ($objects as $object) {
+
+            list($event, $author, $filename) = explode('/', $object);
+            
+            if (!isset($results[$event])) {
+                $results[$event] = array();
+            }
+
+            $results[$event][] = array(
+                'original'  => $this->getSignedUrl((string) $object, true),
+                'thumbnail' => $this->getSignedUrl(str_replace('_o', '_s', $object)),
+                'lightbox'  => $this->getSignedUrl(str_replace('_o', '_l', $object)),
+                'filename'  => $filename,
+                'event'     => $event,
+                'author'    => $author,
+            );                
+        }
+        
+        $this->_log('info', 'Loaded data from ' . $this->getBaseUrl());
+        
+        return $results;
+    }
+    
+    protected function _loadFromCache()
+    {
+        if ($this->_cache && $this->_cache->contains($this->_cacheId)) {
+            return $this->_cache->fetch($this->_cacheId);
+        }
+        return false;
+    }
+    
+    protected function _saveToCache($data)
+    {
+        if ($this->_cache) {
+            $this->_cache->save($this->_cacheId, $data);
+        }
     }
     
     protected function _log($level, $message)

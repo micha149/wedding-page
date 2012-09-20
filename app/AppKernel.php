@@ -20,7 +20,8 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Micha149\GalleryBundle\GalleryBundle(),
-            new Cybernox\AmazonWebServicesBundle\CybernoxAmazonWebServicesBundle(),            
+            new Cybernox\AmazonWebServicesBundle\CybernoxAmazonWebServicesBundle(),
+            new Liip\DoctrineCacheBundle\LiipDoctrineCacheBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
