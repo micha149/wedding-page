@@ -87,6 +87,14 @@ class FileManager
             $data = $this->_loadData();            
             $this->_saveToCache($data);
         }
+        
+        foreach ($data as $event => $images) {
+            for ($i = 0; $i < count($images); $i++) {
+                $data[$event][$i]['original'] = $this->getSignedUrl($images[$i]['original'], true);
+                $data[$event][$i]['thumbnail'] = $this->getSignedUrl($images[$i]['thumbnail']);
+                $data[$event][$i]['lightbox'] = $this->getSignedUrl($images[$i]['lightbox']);                                
+            }
+        }
 
         $this->_data = $data;
         
@@ -94,7 +102,7 @@ class FileManager
     }
     
     protected function _loadData()
-    {               
+    {   
         $objects = $this->_s3->get_object_list($this->_bucket, array(
             'pcre' => '/(.+)\/(.+)\/(.+_o.+)/i'
         ));
@@ -110,9 +118,9 @@ class FileManager
             }
 
             $results[$event][] = array(
-                'original'  => $this->getSignedUrl((string) $object, true),
-                'thumbnail' => $this->getSignedUrl(str_replace('_o', '_s', $object)),
-                'lightbox'  => $this->getSignedUrl(str_replace('_o', '_l', $object)),
+                'original'  => (string) $object,
+                'thumbnail' => str_replace('_o', '_s', $object),
+                'lightbox'  => str_replace('_o', '_l', $object),
                 'filename'  => $filename,
                 'event'     => $event,
                 'author'    => $author,
@@ -127,6 +135,7 @@ class FileManager
     protected function _loadFromCache()
     {
         if ($this->_cache && $this->_cache->contains($this->_cacheId)) {
+            ldd($this->_cache->fetch($this->_cacheId));
             return $this->_cache->fetch($this->_cacheId);
         }
         return false;
