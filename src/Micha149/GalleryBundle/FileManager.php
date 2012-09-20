@@ -135,7 +135,6 @@ class FileManager
     protected function _loadFromCache()
     {
         if ($this->_cache && $this->_cache->contains($this->_cacheId)) {
-            ldd($this->_cache->fetch($this->_cacheId));
             return $this->_cache->fetch($this->_cacheId);
         }
         return false;
